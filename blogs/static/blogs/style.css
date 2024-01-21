@@ -1,0 +1,93 @@
+.navbar {
+  background-color: #333; /* Set the background color */
+  padding: 10px; /* Adjust padding as needed */
+  color: #fff; /* Set text color */
+  text-align: center; /* Center-align text */
+  font-size: x-large;
+}
+
+/* Optional: Add styles for navigation links */
+.navbar a {
+  color: #fff; /* Set link color */
+  text-decoration: none; /* Remove underline */
+  margin: 0 10px; /* Add spacing between links */
+}
+
+/* Optional: Change link color on hover */
+.navbar a:hover {
+  color: #ffcc00; /* Set hover color */
+}
+
+.loginModal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5%;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.loginModal h2 {
+  margin-bottom: 20px;
+  color: #333;
+  text-align: center;
+}
+
+.loginModal a {
+  text-align: end;
+}
+
+/* Form styles */
+form {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+/* Input styles */
+form input {
+  text-align: center;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Button styles */
+.loginButton {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.loginButton:hover {
+  background-color: #0056b3;
+}
+
+.login-modal-body {
+  background-image: url("/static/blogs/assets/hunterhunter.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat; /* Ensure the background image doesn't repeat */
+  height: 100vh; /* Set the height to 100% of the viewport height */
+  margin: 0; /* Remove any default margin */
+  display: flex; /* Use flexbox to center content vertically */
+  align-items: center; /* Center content vertically */
+}
+
+.home-body {
+  background-image: url("/static/blogs/assets/cutesy.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat; /* Ensure the background image doesn't repeat */
+  height: 100vh; /* Set the height to 100% of the viewport height */
+}

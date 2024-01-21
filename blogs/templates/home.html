@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+<!--prettier-ignore -->
+{% load static %} {% block title %}Home{% endblock %}
+
+<!-- prettier-ignore -->
+
+{% block content %}
+<body class="home-body">
+  <div class="navbar">Grog Blog</div>
+  <div class="">{% if user.is_authenticated %} Hi {{ user.username }}!</div>
+
+  <!-- prettier-ignore -->
+  <p><a href="{% url 'logout' %}">Log Out</a></p>
+  {% else %}
+  <p>You are not logged in</p>
+  <a href="{% url 'login' %}">Log In</a>
+  {% endif %}
+</body>
+{% endblock %}
