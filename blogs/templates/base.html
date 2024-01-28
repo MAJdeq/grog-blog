@@ -1,8 +1,45 @@
+{% load static %}
+
 <html>
   <head>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="../static/blogs/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="{% static 'blogs/style.css' %}" />
     <title>{% block title %}Django Auth Tutorial{% endblock %}</title>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var calendarEl = document.getElementById("calendar");
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          events: "{% url 'blogs:get_blogs' %}",
+          timeZone: "America/Denver",
+          initialView: "dayGridMonth",
+          height: "90%", // Set to your desired height (e.g., 90%)
+          dayHeaderClassNames: function (day) {
+            return "custom-weekday-label";
+          },
+          windowResize: function (view) {
+            // Adjust the calendar height after window resize
+            adjustCalendarHeight();
+          },
+        });
+
+        function adjustCalendarHeight() {
+          calendarEl.style.width = "100%";
+          calendarEl.style.height = "90%"; // Set to your desired height (e.g., 90%)
+        }
+
+        // Initial adjustment
+        adjustCalendarHeight();
+        calendar.render();
+      });
+    </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
   </head>
   <body>
     <main>{% block content %} {% endblock %}</main>

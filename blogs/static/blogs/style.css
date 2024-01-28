@@ -1,35 +1,58 @@
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-container p {
+  margin-top: 0%;
+  margin-bottom: 0%;
+}
+
+.body-container {
+  height: 90vh;
+  width: auto;
+  padding: 20px; /* Add padding as needed */
+  box-sizing: border-box; /* Include padding in height calculation */
+  margin-left: 30px;
+  margin-right: 30px;
+}
+
+.fc-toolbar-title {
+  font-size: 20px; /* Adjust the font size */
+  color: white; /* Adjust the text color */
+  font-weight: lighter;
+  font-family: "Courier New", Courier, monospace;
+  padding-left: 5px;
+}
+
+.fc-today {
+  opacity: 0.7;
+}
+
+.createButton {
+  padding: 8px;
+  margin-right: 170px;
+  background-color: #007bff;
+  border-radius: 10%;
+}
+
+.createButton:hover {
+  cursor: pointer;
+}
+
 .navbar {
-  background-color: #333; /* Set the background color */
-  padding: 10px; /* Adjust padding as needed */
-  color: #fff; /* Set text color */
-  text-align: center; /* Center-align text */
-  font-size: x-large;
+  padding: 5px;
+  color: #fff;
+  font-size: 45px;
+  font-family: "Courier New", Courier, monospace;
 }
 
-/* Optional: Add styles for navigation links */
-.navbar a {
-  color: #fff; /* Set link color */
-  text-decoration: none; /* Remove underline */
-  margin: 0 10px; /* Add spacing between links */
-}
-
-/* Optional: Change link color on hover */
-.navbar a:hover {
-  color: #ffcc00; /* Set hover color */
-}
-
-.loginModal {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 300px;
-  margin: 0 auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5%;
-  background-color: #fff;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+.greeting {
+  text-align: right;
+  margin-right: 10px;
+  font-size: medium;
+  color: whitesmoke;
 }
 
 .loginModal h2 {
@@ -39,7 +62,7 @@
 }
 
 .loginModal a {
-  text-align: end;
+  text-align: center;
 }
 
 /* Form styles */
@@ -85,9 +108,79 @@ form input {
 }
 
 .home-body {
-  background-image: url("/static/blogs/assets/cutesy.jpg");
+  background-image: url("/static/blogs/assets/hunterhunter.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat; /* Ensure the background image doesn't repeat */
   height: 100vh; /* Set the height to 100% of the viewport height */
+  margin: 0; /* Remove any default margin */
+}
+
+.blogs {
+  float: left;
+  width: 65%;
+  text-align: center;
+}
+
+.custom-weekday-label {
+  color: white;
+}
+
+body {
+  font-family: "fcicons", fallback-font, sans-serif;
+}
+
+.create-blog {
+  float: left;
+  width: 35%;
+  padding: 10px;
+  background-color: gray;
+}
+
+.blogBody {
+  background-color: white;
+  width: calc(65% - 10px); /* Adjust width to leave some space between items */
+  margin-bottom: 20px;
+  margin-left: 20px;
+  box-sizing: border-box; /* Include padding in width calculation */
+  padding: 10px;
+  border-radius: 15%;
+}
+
+.create-blog {
+  width: calc(30% - 10px); /* Adjust width to leave some space between items */
+  margin-bottom: 20px;
+  box-sizing: border-box; /* Include padding in width calculation */
+}
+
+/* Optional: Add media queries for responsiveness */
+@media (max-width: 768px) {
+  .blogs {
+    flex-direction: column;
+  }
+
+  .blogBody,
+  .create-blog {
+    width: 100%;
+  }
+}
+
+.blog-post {
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin: 50px;
+}
+
+.author {
+  color: #777;
+}
+
+.date {
+  font-style: italic;
+  color: #555;
+}
+
+.content {
+  line-height: 1.6;
+  color: #444;
 }

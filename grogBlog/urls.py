@@ -15,15 +15,21 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from django.views.generic.base import TemplateView
 from blogs.views import *
-from grogBlog.views import register_view
+from grogBlog import settings
+from grogBlog.views import login_view, register_view
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.contrib.staticfiles.urls import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include("django.contrib.auth.urls")),
-    path("blogs/", include("blogs.urls")),
-    path("blogs/home", TemplateView.as_view(template_name="home.html"), name="home"),
-    path('accounts/static/blogs/style.css', custom_css, name='custom_css'),
-    path('accounts/register/', register_view, name='registration_view'),
+    path('home/', include('blogs.urls')),
+    path('accounts/register/', register_view, name='register_view'),
+    path('accounts/login/', login_view, name="login_view")
 ]
+
+urlpatterns += staticfiles_urlpatterns()
+
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

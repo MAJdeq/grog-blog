@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+<!--prettier-ignore -->
+{% load static %}{% block title %}Home{% endblock %}
+
+<!-- prettier-ignore -->
+{% block content %}
+<body class="home-body">
+  <div class="header-container">
+    <div class="navbar">Grog Blog</div>
+    <a href="{% url 'blogs:home' %}">
+      <button class="createButton">Go Back</button>
+    </a>
+    <div class="greeting">
+      {% if user.is_authenticated %} Hi {{ user.first_name }}!
+      <p><a href="{% url 'logout' %}">Log Out</a></p>
+      {% else %}
+      <p>You are not logged in</p>
+      <a href="{% url 'login' %}">Log In</a>
+      {% endif %}
+    </div>
+  </div>
+  <div class="blog-post">
+    <h2>{{ blog.title }}</h2>
+    <p class="author">Author: {{ blog.author }}</p>
+    <p class="date">Date: {{ blog.date|date:"F j, Y" }}</p>
+    <p class="content">{{ blog.content }}</p>
+  </div>
+</body>
+{% endblock %}

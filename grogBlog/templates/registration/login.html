@@ -3,6 +3,45 @@
 
 <!-- prettier-ignore -->
 {% block content %}
+<style>
+  .loginModal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5%;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  .loginModal h2 {
+    margin-bottom: 20px;
+    color: #333;
+    text-align: center;
+  }
+
+  .loginModal a {
+    text-align: center;
+  }
+  .loginButton {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .loginButton:hover {
+    background-color: #0056b3;
+  }
+  .form-group {
+    margin-bottom: 0%;
+  }
+</style>
 <body class="login-modal-body">
   <div class="loginModal">
     <h2>Log In</h2>
@@ -26,9 +65,16 @@
           required
         />
       </div>
+      {% if form.non_field_errors %}
+      <div class="form-errors">
+        {% for error in form.non_field_errors %}
+        <div style="color: red; margin-bottom: 20px">{{ error }}</div>
+        {% endfor %}
+      </div>
+      {% endif %}
       <button class="loginButton" type="submit">Log In</button>
     </form>
-    <a class="registerLink" href="register.html">Register</a>
+    <a class="registerLink" href="../../../accounts/register">Register</a>
   </div>
   s
 </body>
