@@ -8,14 +8,39 @@
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     var dateTextarea = document.getElementById("id_date");
+    var authorTextarea = document.getElementById("id_author");
 
     if (dateTextarea) {
       // Get current date in YYYY-MM-DD format
-      var currentDate = new Date().toISOString().split("T")[0];
+      // Get the current date
+      var currentDate = new Date();
 
-      // Set the date in the textarea
-      dateTextarea.value = currentDate;
+      // Subtract one day from the current date
+      currentDate.setDate(currentDate.getDate() - 1);
+
+      // Format the date to ISO string (YYYY-MM-DD)
+      var mtcDate = currentDate.toISOString().split("T")[0];
+
+      dateTextarea.value = mtcDate;
     }
+  });
+  var apiUrl = "{% url 'blogs:get_user_name' %}";
+
+  // Make an AJAX request to fetch the username
+  $.ajax({
+    url: apiUrl,
+    method: "GET",
+    success: function (data) {
+      var authorTextarea = document.getElementById("id_author");
+
+      if (authorTextarea && data.user) {
+        // Set the value of the textarea to the fetched username
+        authorTextarea.value = data.user;
+      }
+    },
+    error: function () {
+      console.log("Error fetching username");
+    },
   });
 </script>
 <body class="home-body">
@@ -84,15 +109,18 @@
                 id="id_author"
                 name="author"
                 required
+                readonly
               />
             </div>
             <div class="form-group">
               <label for="id_date">Date:</label>
               <textarea
+                style="text-align: center"
                 class="form-control"
                 id="id_date"
                 name="date"
                 required
+                readonly
               ></textarea>
             </div>
             <div class="form-group">

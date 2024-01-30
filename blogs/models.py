@@ -4,7 +4,7 @@ class Blog(models.Model):
     title = models.CharField(max_length=200)
     author = models.CharField(max_length=200)
     date = models.DateField("date published")
-    content = models.CharField(max_length=2000)
+    content = models.TextField()
 
 
 class Comments(models.Model):

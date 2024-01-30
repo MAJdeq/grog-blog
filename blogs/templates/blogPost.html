@@ -1,15 +1,15 @@
-{% extends 'base.html' %}
-
+{% extends 'base.html' %} {% load markdown_filters %}
 <!--prettier-ignore -->
 {% load static %}{% block title %}Home{% endblock %}
 
 <!-- prettier-ignore -->
 {% block content %}
+
 <body class="home-body">
   <div class="header-container">
     <div class="navbar">Grog Blog</div>
     <a href="{% url 'blogs:home' %}">
-      <button class="createButton">Go Back</button>
+      <button class="createButton">Back to Calendar</button>
     </a>
     <div class="greeting">
       {% if user.is_authenticated %} Hi {{ user.first_name }}!
@@ -21,10 +21,183 @@
     </div>
   </div>
   <div class="blog-post">
-    <h2>{{ blog.title }}</h2>
-    <p class="author">Author: {{ blog.author }}</p>
-    <p class="date">Date: {{ blog.date|date:"F j, Y" }}</p>
-    <p class="content">{{ blog.content }}</p>
+    <div class="header">
+      <h2 style="margin-bottom: 0%">{{ blog.title }}</h2>
+      <p class="date">Date: {{ blog.date|date:"F j, Y" }}</p>
+    </div>
+    <div class="header">
+      <p class="author">Author: {{ blog.author }}</p>
+      <div>
+        <a
+        href="#"
+        class="edit-post-btn"
+        data-toggle="modal"
+        data-target="#createPostModal"
+        data-blog-id="{{ blog.id }}"
+      >
+        <button class="edit-post-btn btn btn-dark mb-3" type="button">Edit</button>
+      </a>
+      <a href="{% url 'blogs:delete_post' blog_id=blog.id %}">
+        <button class="btn btn-danger mb-3" type="button">Delete</button>
+      </a>
+      </div>
+    </div>
+    <div class="border"></div>
+    <div class="content">
+        {{ blog.content|markdown|safe }}
+    </div>
   </div>
+   <div
+    class="modal fade"
+    id="createPostModal"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createPostModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="createPostModalLabel">Edit Post</h5>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <!-- Example form for creating a post -->
+          <form method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+              <label for="id_title">Title:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="id_title"
+                name="title"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="id_author">Author:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="id_author"
+                name="author"
+                required
+                readonly
+              />
+            </div>
+            <div class="form-group">
+              <label for="id_date">Date:</label>
+              <textarea
+                class="form-control"
+                style="text-align: center;"
+                id="id_date"
+                name="date"
+                required
+                readonly
+              ></textarea>
+            </div>
+            <div class="form-group">
+              <label for="id_content">Content:</label>
+              <textarea
+                class="form-control"
+                id="id_content"
+                name="content"
+                rows="3"
+                required
+              ></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Edit Post</button>
+          </form>
+        </div>
+      </div>
 </body>
+<script>
+    var blogId;  // Declare blogId as a global variable
+  
+    // Function to fetch and display existing blog content
+    function fetchBlogDataAndDisplay() {
+      // Assuming you have an API endpoint for retrieving blog details
+      var apiUrl = "{% url 'blogs:get_blog_data' blog_id=blog.id %}";
+  
+      // Make an AJAX request to fetch blog details
+      $.ajax({
+        url: apiUrl,
+        method: 'GET',
+        success: function (data) {
+          // Populate the form fields with retrieved data
+          $('#id_title').val(data.title);
+          $('#id_author').val(data.author);
+          $('#id_date').val(data.date);
+          $('#id_content').val(data.content);
+  
+          // Show the modal after fetching and displaying blog content
+          $('#createPostModal').modal('show');
+        },
+        error: function () {
+          console.log('Error fetching blog details');
+        }
+      });
+    }
+  
+    // Assuming you have a button with class 'edit-post-btn' to trigger the modal
+    $('.edit-post-btn').click(function () {
+      blogId = $(this).data('blog-id');  // Update the global blogId variable
+  
+      // Fetch and display existing blog content
+      fetchBlogDataAndDisplay();
+    });
+  
+    // Function to handle form submission and update blog post
+    $('#createPostModal').find('form').submit(function (e) {
+      e.preventDefault(); // Prevent the default form submission
+  
+      // Assuming you have an API endpoint for retrieving and updating blog details
+      var apiUrl = "{% url 'blogs:editPost' blog_id=blog.id %}";
+  
+      // Make an AJAX request to fetch and update blog details
+      $.ajax({
+        url: apiUrl,
+        method: 'POST',
+        data: $(this).serialize(),
+        success: function (data) {
+            $('#createPostModal').modal('hide');
+            updateDisplayedContent(data);
+        },
+      });
+    });
+  
+    // Function to update the displayed content on success
+    function updateDisplayedContent(data) {
+      // Update the displayed content on the page using data received in the response
+      // Adjust this part based on your actual HTML structure and how you want to update the content
+      $('#blog-title').text(data.title);
+      $('#blog-author').text('Author: ' + data.author);
+      $('#blog-date').text('Date: ' + data.date);
+      $('#blog-content').html(data.content);
+
+      location.reload();
+    }
+  
+    // Run this when the document is ready
+    $(document).ready(function () {
+      // Assuming there is a blog ID available, you can fetch and display content immediately
+      if (blogId) {
+        fetchBlogDataAndDisplay();
+      }
+    });
+  </script>
+  
+  
+
 {% endblock %}
+
+
+

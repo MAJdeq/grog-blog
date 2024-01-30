@@ -24,13 +24,43 @@ def get_blogs(request):
             events.append({
                 'title': blog.title,
                 'start': formatted_date,  # Format date in 'YYYY-MM-DD'
-                'url': 'blog/detail/{}/'.format(blog.id),  # Optional: Add a URL for event click
+                'url': 'blog_detail/{}/'.format(blog.id),  # Optional: Add a URL for event click
             })
         except Exception as e:
             print(f"Error processing blog {blog.id}: {e}")
 
     # Return events as JSON response
     return JsonResponse(events, safe=False)
+    
+
+@login_required
+def get_blog_data(request, blog_id):
+    blog = get_object_or_404(Blog, pk=blog_id)
+
+    if request.method == 'POST':
+        # Update the blog post with the submitted data
+        blog.title = request.POST.get('title', '')
+        blog.author = request.POST.get('author', '')
+        blog.date = datetime.datetime.strptime(request.POST.get('date', ''), '%Y-%m-%d')
+        blog.content = request.POST.get('content', '')
+        blog.save()
+
+        return JsonResponse({'status': 'success'})
+    else:
+        # Return the current blog data for editing
+        data = {
+            'title': blog.title,
+            'author': blog.author,
+            'date': blog.date.strftime('%Y-%m-%d'),
+            'content': blog.content,
+        }
+        return JsonResponse(data)
+
+@login_required
+def delete_post(request, blog_id):
+    blog = get_object_or_404(Blog, pk=blog_id)
+    blog.delete()
+    return redirect('blogs:home')
 
 
 
@@ -38,6 +68,16 @@ def get_blogs(request):
 def blog_detail(request, blog_id):
     blog = get_object_or_404(Blog, pk=blog_id)
     return render(request, 'blogPost.html', {'blog': blog})
+
+
+@login_required
+def get_user_name(request):
+    user = request.user
+    data = {
+        'user': user.username
+    }
+    return JsonResponse(data)
+
 
 
 
@@ -60,6 +100,25 @@ def newPost(request):
         print(form.errors)
     else:
         form = BlogForm()
+    return render(request, 'home.html', {'form': form})
+
+def editPost(request, blog_id):
+    # Retrieve the existing blog post based on blog_id
+    blog_post = get_object_or_404(Blog, pk=blog_id)
+
+    if request.method == "POST":
+        # Populate the form with the existing blog post data
+        form = BlogForm(request.POST, instance=blog_post)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user.username
+            post.save()
+            return redirect('blogs:home')
+        print(form.errors)
+    else:
+        # Populate the form with the existing blog post data
+        form = BlogForm(instance=blog_post)
+
     return render(request, 'home.html', {'form': form})
 
 
