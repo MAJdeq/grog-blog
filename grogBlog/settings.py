@@ -79,12 +79,12 @@ WSGI_APPLICATION = 'grogBlog.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'URL': os.getenv('POSTGRES_URL'),
-        'NAME': os.getenv('PGNAME'),
-        'USER': os.getenv('PGUSER'),
-        'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
-        'HOST': os.getenv('PGHOST'),
-        'PORT': os.getenv('PGPORT'),
+        'URL': 'postgresql://postgres:-AbafBe5D6EF3GGg*-fd4d55fEe11-61@viaduct.proxy.rlwy.net:35584/railway',
+        'NAME': 'railway',
+        'USER': 'postgres',
+        'PASSWORD': '-AbafBe5D6EF3GGg*-fd4d55fEe11-61',
+        'HOST': 'viaduct.proxy.rlwy.net',
+        'PORT': '35584',
     }
 }
 
