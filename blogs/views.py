@@ -102,6 +102,8 @@ def newPost(request):
         form = BlogForm()
     return render(request, 'home.html', {'form': form})
 
+
+
 def editPost(request, blog_id):
     # Retrieve the existing blog post based on blog_id
     blog_post = get_object_or_404(Blog, pk=blog_id)

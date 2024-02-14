@@ -16,10 +16,11 @@
       var currentDate = new Date();
 
       // Subtract one day from the current date
-      currentDate.setDate(currentDate.getDate() - 1);
+      currentDate.setDate(currentDate.getDate());
 
       // Format the date to ISO string (YYYY-MM-DD)
       var mtcDate = currentDate.toISOString().split("T")[0];
+      console.log(currentDate);
 
       dateTextarea.value = mtcDate;
     }
