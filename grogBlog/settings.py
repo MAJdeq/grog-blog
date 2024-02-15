@@ -78,6 +78,9 @@ WSGI_APPLICATION = 'grogBlog.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
+    'OPTIONS': {
+            'version': '3.8.3',  # Make sure this is set correctly
+        },
     'default': dj_database_url.config(
         default=os.getenv('DATABASE_URL', 'sqlite://localhost/db.sqlite3')
     )
