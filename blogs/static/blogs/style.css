@@ -175,9 +175,11 @@ body {
   margin: 50px;
   color: white;
   width: 55%;
+  height: 80%;
   background-color: #191970;
   display: flex; /* Use flexbox to align items in a column */
   flex-direction: column;
+  overflow-y: scroll;
 }
 
 .date {
