@@ -78,12 +78,14 @@ WSGI_APPLICATION = 'grogBlog.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
-    'OPTIONS': {
-            'version': '3.8.3',  # Make sure this is set correctly
-        },
-    'default': dj_database_url.config(
-        default=os.getenv('DATABASE_URL', 'sqlite://localhost/db.sqlite3')
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'railway',  # Database name
+        'USER': 'postgres',  # Database user
+        'PASSWORD': '-AbafBe5D6EF3GGg*-fd4d55fEe11-61',
+        'HOST': 'viaduct.proxy.rlwy.net',
+        'PORT': '35584',
+    }
 }
 
 
