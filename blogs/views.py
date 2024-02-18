@@ -41,7 +41,7 @@ def get_blog_data(request, blog_id):
         # Update the blog post with the submitted data
         blog.title = request.POST.get('title', '')
         blog.author = request.POST.get('author', '')
-        blog.date = datetime.datetime.strptime(request.POST.get('date', ''), '%Y-%m-%d')
+        blog.date = datetime.datetime.strptime(request.POST.get('date', ''), '%Y-%m-%d') - 1
         blog.content = request.POST.get('content', '')
         blog.save()
 
